@@ -17,12 +17,21 @@
 @implementation WorldsListViewController
 {
     WorldsCollection *worldsCollection;
+    __weak IBOutlet UIButton *logOutButton;
+    __weak IBOutlet UIButton *refreshButton;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentWasChanged:) name:XyralityTestWorldsListContentWasChanged object:nil];
     worldsCollection = [WorldsCollection sharedInstance];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    BOOL loginExists = [[NSUserDefaults standardUserDefaults] objectForKey:@"login"]!=nil;
+    refreshButton.hidden = !loginExists;
+    [logOutButton setTitle:@"LogIn" forState:UIControlStateNormal];
 }
 
 
@@ -53,6 +62,11 @@
 }
 
 - (IBAction)onRefreshButtonPressed:(id)sender {
+    [worldsCollection loginWithLogin:[[NSUserDefaults standardUserDefaults] objectForKey:@"login"] password:[[NSUserDefaults standardUserDefaults] objectForKey:@"password"] callback:^(NSError*error){
+        if (error){
+            NSLog(@"%@",error);
+        }
+    }];
 }
 
 @end

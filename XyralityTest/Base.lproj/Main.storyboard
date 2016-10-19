@@ -60,13 +60,15 @@
                                 <rect key="frame" x="276" y="7" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Refresh"/>
+                                <connections>
+                                    <action selector="onRefreshButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MgP-v8-eWz"/>
+                                </connections>
                             </button>
-                            <connections>
-                                <action selector="onRefreshButtonPressed:" destination="BYZ-38-t0r" id="Iiu-pP-Gwo"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="logOutButton" destination="usf-0m-5Cl" id="Tns-3V-B04"/>
+                        <outlet property="refreshButton" destination="flo-qd-xEN" id="Ies-5M-97A"/>
                         <outlet property="tableView" destination="dZr-Ih-NqR" id="RH6-QK-TV7"/>
                         <segue destination="kru-IJ-6aY" kind="popoverPresentation" identifier="login" popoverAnchorView="dZr-Ih-NqR" id="tVm-fd-b4T">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>

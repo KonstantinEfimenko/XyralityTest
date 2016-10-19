@@ -17,12 +17,18 @@
 {
     __weak IBOutlet UITextField *loginTextField;
     __weak IBOutlet UITextField *passwordTextField;
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    NSString *login = [[NSUserDefaults standardUserDefaults] objectForKey:@"login"];
+    if(login){
+        loginTextField.text = login;
+    }
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    if(password){
+        passwordTextField.text = password;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,10 +37,16 @@
 }
 
 - (IBAction)onLogInButtonPressed:(id)sender {
+    if(loginTextField.text.length==0 || passwordTextField.text.length==0){
+        return;
+    }
     [[WorldsCollection sharedInstance] loginWithLogin:loginTextField.text password:passwordTextField.text callback:^(NSError*error){
         if (error){
             NSLog(@"%@",error);
         }else{
+            [[NSUserDefaults standardUserDefaults] setObject:loginTextField.text forKey:@"login"];
+            [[NSUserDefaults standardUserDefaults] setObject:passwordTextField.text forKey:@"password"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }];
