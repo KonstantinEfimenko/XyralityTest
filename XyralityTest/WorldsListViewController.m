@@ -31,7 +31,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     BOOL loginExists = [[NSUserDefaults standardUserDefaults] objectForKey:@"login"]!=nil;
     refreshButton.hidden = !loginExists;
-    [logOutButton setTitle:@"LogIn" forState:UIControlStateNormal];
+    [logOutButton setTitle:loginExists?@"LogOut":@"LogIn" forState:UIControlStateNormal];
 }
 
 
@@ -57,16 +57,22 @@
     return cell;
 }
 
+
 - (IBAction)onLogOutButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"login" sender:self];
 }
 
+
 - (IBAction)onRefreshButtonPressed:(id)sender {
     [worldsCollection loginWithLogin:[[NSUserDefaults standardUserDefaults] objectForKey:@"login"] password:[[NSUserDefaults standardUserDefaults] objectForKey:@"password"] callback:^(NSError*error){
         if (error){
+            
             NSLog(@"%@",error);
         }
     }];
 }
+
+
+
 
 @end
