@@ -29,6 +29,11 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
+    [self refreshButtons];
+}
+
+
+- (void)refreshButtons{
     BOOL loginExists = [[NSUserDefaults standardUserDefaults] objectForKey:@"login"]!=nil;
     refreshButton.hidden = !loginExists;
     [logOutButton setTitle:loginExists?@"LogOut":@"LogIn" forState:UIControlStateNormal];
@@ -42,6 +47,7 @@
 
 
 - (void)contentWasChanged:(id)object{
+    [self refreshButtons];
     [_tableView reloadData];
 }
 
